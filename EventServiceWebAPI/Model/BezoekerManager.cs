@@ -1,6 +1,6 @@
 ﻿namespace EventServiceWebAPI.Model
 {
-    public interface IEventRepository
+    public class BezoekerManager
     {
     }
 }

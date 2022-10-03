@@ -6,11 +6,9 @@ namespace EventServiceWebAPI.Controllers
         [ApiController]
         public class BezoekerController : ControllerBase
         {
-            private IBezoekerRepository repo;
-
-            public BezoekerController(IEventRepository repo)
+            public BezoekerController()
             {
-                this.repo = repo;
+                
             }
         }
 }

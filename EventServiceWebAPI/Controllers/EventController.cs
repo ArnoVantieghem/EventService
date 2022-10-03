@@ -6,11 +6,9 @@ namespace EventServiceWebAPI.Controllers
         [ApiController]
         public class EventController : ControllerBase
         {
-            private IEventRepository repo;
-
-            public EventController(IEventRepository repo)
+            public EventController()
             {
-                this.repo = repo;
+
             }
         }
 }
