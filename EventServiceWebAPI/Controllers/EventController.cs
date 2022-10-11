@@ -2,7 +2,7 @@
 
 namespace EventServiceWebAPI.Controllers
 {
-        [Route("api/[controller]")] // pad
+        [Route("[controller]")] // pad
         [ApiController]
         public class EventController : ControllerBase
         {

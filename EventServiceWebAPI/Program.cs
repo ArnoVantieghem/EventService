@@ -1,3 +1,5 @@
+using EventServiceBL.Managers;
+
 namespace EventServiceWebAPI
 {
     public class Program
@@ -12,6 +14,7 @@ namespace EventServiceWebAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton<BezoekerManager>();
 
             var app = builder.Build();
 
