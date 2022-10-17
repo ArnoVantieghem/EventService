@@ -13,7 +13,9 @@
         public string Locatie { get; private set; }
         public DateTime Datum { get; set; }
         public int MaximumBezoekers { get; private set; }
-        public List<Bezoeker> _IngeschrevenBezoekers = new(); // aangezien het aantal bezoekers niet zo groot is kan je dit in een lijst opslaan in event, als je met grote aantallen zit ga je gebruik maken van managers
+
+        private List<Bezoeker> _IngeschrevenBezoekers = new(); // aangezien het aantal bezoekers niet zo groot is kan je dit in een lijst opslaan in event, als je met grote aantallen zit ga je gebruik maken van managers
+        public IReadOnlyList<Bezoeker> _ReadOnlyBezoekers => _IngeschrevenBezoekers.AsReadOnly();
         public void SetNaam(string naam)
         {
             if (string.IsNullOrWhiteSpace(naam)) throw new EventException("Event - SetNaam");

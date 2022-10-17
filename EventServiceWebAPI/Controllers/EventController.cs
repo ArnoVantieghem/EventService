@@ -9,10 +9,12 @@ namespace EventServiceWebAPI.Controllers
         public class EventController : ControllerBase
         {
         private EventManager em;
+        private BezoekerManager bm;
 
-        public EventController(EventManager em)
+        public EventController(EventManager em, BezoekerManager bm)
         {
             this.em = em;
+            this.bm = bm;
         }
 
         [HttpPost]
@@ -77,10 +79,62 @@ namespace EventServiceWebAPI.Controllers
                 return BadRequest(ex.Message);
             }
             }
-            //public void GeefEventsVoorDatum () { }
-            //public void GeefEventsVoorLocatie () { }
-            //public void RegistreerBezoekerVoorEvent() { }
-            //public void MeldBezoekerAfVoorEvent() { }
+            [HttpGet]
+            [Route("date/{date}")]
+            public ActionResult<List<Event>> GeefEventsVoorDatum (string date)
+            {
+            try
+            {
+                return Ok(em.GetEventOpDatum(DateTime.Parse(date)));
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            }
+            [HttpGet]
+            [Route("location/{location}")]
+            public ActionResult<List<Event>> GeefEventsVoorLocatie (string location)
+            {
+            try
+            {
+                return Ok(em.GetEventOpLocatie(location));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            }
+            [HttpPost]
+            [Route("{EventName}")]
+            public ActionResult<Event> RegistreerBezoekerVoorEvent(string EventName, [FromBody]int bezoekerId)
+            {
+            try
+            {
+                Bezoeker be= bm.GeefBezoeker(bezoekerId);
+                Event ev=em.GetEventOpNaam(EventName);
+                em.RegistreerBezoeker(be, ev);
+                return CreatedAtAction(nameof(Get),new {name=EventName},ev);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            }
+            [HttpDelete]
+            [Route("{EventName}")]
+        public IActionResult MeldBezoekerAfVoorEvent(string EventName, [FromBody] int bezoekerId)
+        {
+            try
+            {
+                Bezoeker be = bm.GeefBezoeker(bezoekerId);
+                Event ev = em.GetEventOpNaam(EventName);
+                em.VerwijderBezoeker(be, ev);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }

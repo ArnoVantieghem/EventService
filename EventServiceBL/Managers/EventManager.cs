@@ -70,7 +70,7 @@ namespace EventServiceBL.Managers
         public void VerwijderBezoeker(Bezoeker bezoeker, Event ev)
         {
             if (bezoeker == null || ev == null) throw new EventException("EventManager - VerwijderBezoeker1");
-            if (_events.ContainsKey(ev.Naam)) throw new EventException("EventManager - VerwijderBezoeker2");
+            if (!_events.ContainsKey(ev.Naam)) throw new EventException("EventManager - VerwijderBezoeker2");
             try
             {
                 _events[ev.Naam].VerwijderBezoeker(bezoeker);
