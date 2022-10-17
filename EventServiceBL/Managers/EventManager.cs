@@ -6,6 +6,13 @@ namespace EventServiceBL.Managers
     {
         private Dictionary<string,Event> _events = new Dictionary<string, Event>();
 
+        public EventManager()
+        {
+            _events.Add("ASP.NET Boot", new Event("ASP.NET Boot", "Schoonmeersen Lokaal 1.0012",DateTime.Parse("24/10/2022"),20));
+            _events.Add("Bijscholing async", new Event("Bijscholing async", "Mercator - gebouw D", DateTime.Parse("14/11/2022"), 10));
+            _events.Add("MongoDB 2022", new Event("MongoDB 2022", "Mercator - gebouw C", DateTime.Parse("1/12/2022"), 4));
+        }
+
         public void VoegEventToe(Event ev)
         {
             if (ev == null) throw new EventException("Eventmanager - VoegEventToe1");
@@ -25,6 +32,12 @@ namespace EventServiceBL.Managers
             // TODO checken ofdat nieuwe event niet identitiek is als bestaande
             _events[ev.Naam] = ev;
         }
+        public Event GetEventOpNaam(string naam)
+        {
+            if (string.IsNullOrWhiteSpace(naam)) throw new EventException("EventManager - GetEventOpNaam1");
+            if (!_events.ContainsKey(naam)) throw new EventException("EventManager - GetEventOpNaam2");
+            return _events[naam];
+        }
         public IReadOnlyList<Event> GetEvents()
         {
             return _events.Values.ToList().AsReadOnly();
@@ -36,6 +49,11 @@ namespace EventServiceBL.Managers
         public IReadOnlyList<Event> GetEventOpDatum(DateTime datum)
         {
             return _events.Values.Where(e => e.Datum.Date == datum.Date).ToList();
+        }
+
+        public bool BestaatEvent(string name)
+        {
+            return _events.ContainsKey(name);
         }
         public void RegistreerBezoeker(Bezoeker bezoeker, Event ev)
         {

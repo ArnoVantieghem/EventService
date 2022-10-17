@@ -15,6 +15,7 @@ namespace EventServiceWebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<BezoekerManager>();
+            builder.Services.AddSingleton<EventManager>();
 
             var app = builder.Build();
 
